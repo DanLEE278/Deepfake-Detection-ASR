@@ -1,6 +1,7 @@
 import os
 import argparse
-from utils import utils_model
+from model import WavLMAntispoof
+from util import read_yaml
 
 '''
 Main Features:
@@ -17,15 +18,19 @@ date: 2025.01.30
 def train()-> None:
     pass
 
-def fetech_model()-> None:
-    pass
+def fetech_model(config: dict):
+    model = WavLMAntispoof(config)
+    return model
 
 def parse_argument()-> None:
     args = argparse.ArgumentParser(prog="Audio Deepfake Triner")
     args.add_argument("-c","--config",type=str,default="config/WavLM.yaml")
     args.add_argument("-m","--mode",type=str,default="train")
-    return args
+    return args.parse_args()
 
 if __name__ == "__main__":
-    cfg = parse_argument()
+    args = parse_argument()
+    config = read_yaml(args.config)
+    
+    fetech_model(config)
     
